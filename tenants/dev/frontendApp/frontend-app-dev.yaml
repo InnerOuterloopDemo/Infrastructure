@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend-app-dev
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "9"
+spec:
+  project: frontend-app-dev
+  source:
+    path: frontendApp/dev
+    repoURL: https://github.com/InnerOuterloopDemo/Deployment
+    targetRevision: main
+  destination:
+    namespace: frontend-app-dev
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
